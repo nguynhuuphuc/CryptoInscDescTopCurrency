@@ -17,6 +17,7 @@ const BottomTab = createBottomTabNavigator();
 function HomeTab() {
   return (
     <BottomTab.Navigator
+      initialRouteName={NAME_NAVIGATION.HOME}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -24,8 +25,9 @@ function HomeTab() {
           position: 'absolute',
           left: 0,
           right: 0,
-          height: 64,
+          height: 100,
           backgroundColor: COLORS.bgGrayBlack,
+          borderTopWidth: 0,
         },
       }}>
       <BottomTab.Screen
@@ -55,7 +57,12 @@ function HomeTab() {
         component={Trade}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <TabIcon icon={ICONS.trade} label="Trade" focused={focused} />
+            <TabIcon
+              icon={ICONS.trade}
+              label="Trade"
+              focused={focused}
+              isCircle={true}
+            />
           ),
         }}
       />

@@ -1,17 +1,23 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, ImageSourcePropType} from 'react-native';
 import {ICONS} from '../utils/Const';
 import {style} from './Style';
 
 type Props = {
-  icon: any;
+  icon: ImageSourcePropType;
   label: string;
   focused: boolean;
+  isCircle?: boolean;
 };
 
-export default function TabIcon({icon, label, focused}: Props) {
+export default function TabIcon({
+  icon,
+  label,
+  focused,
+  isCircle = false,
+}: Props) {
   return (
-    <View style={[style.cTab]}>
+    <View style={[style.cTab, isCircle ? style.tabCircle : null]}>
       <Image source={icon} style={[style.icon24, style.cTabIcon]} />
       <Text style={[style.cTabLabel]}>{label}</Text>
     </View>

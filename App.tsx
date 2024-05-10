@@ -7,10 +7,8 @@ import {NavigationContainer} from '@react-navigation/native';
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Navigation />
-      </NavigationContainer>
-    </Provider>
+    <NavigationContainer>
+      <Navigation />
+    </NavigationContainer>
   );
 }
