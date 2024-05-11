@@ -96,9 +96,17 @@ export const style = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  cCoinPercent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
   cNameCoin: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  coinImage: {
+    marginEnd: 16,
   },
   coinIcon: {
     tintColor: COLORS.textPrimary,
@@ -115,6 +123,13 @@ export const style = StyleSheet.create({
     fontWeight: '700',
   },
   coinPricePercent: {
-    color: COLORS.textTertiary,
+    color: COLORS.increase,
+  },
+  coinPercentIcon: {
+    tintColor: COLORS.increase,
+    marginEnd: 4,
+  },
+  flip180Deg: {
+    transform: [{rotate: '180deg'}],
   },
 });

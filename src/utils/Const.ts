@@ -19,6 +19,8 @@ export const COLORS = {
   textSecondary: '#828282',
   textTertiary: '#53ff7a',
   lineChart: '#53ff7a',
+  increase: '#53ff7a',
+  decrease: 'red',
 };
 
 export const FONTSIZE = {
@@ -40,4 +42,5 @@ export const ICONS = {
   increase: require('../icons/top-right.png'),
   transfer: require('../icons/icon-transfert.png'),
   withdraw: require('../icons/icon-withdraw.png'),
+  coin: require('../icons/coin.png'),
 };

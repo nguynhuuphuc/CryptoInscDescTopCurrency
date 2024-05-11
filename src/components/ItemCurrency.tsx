@@ -1,19 +1,49 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, ImageSourcePropType} from 'react-native';
 import React from 'react';
-import {ICONS} from '../utils/Const';
+import {COLORS, ICONS} from '../utils/Const';
 import {style} from './Style';
 
-export default function ItemCurrency() {
+type Props = {
+  image: string;
+  name: string;
+  currency: number;
+  percent: string;
+};
+
+export default function ItemCurrency({image, name, currency, percent}: Props) {
   return (
     <View style={[style.cItemCurrency]}>
       <View style={[style.cNameCoin]}>
-        <Image source={ICONS.home} style={[style.icon24, style.coinIcon]} />
-        <Text style={[style.coinName]}>Bitcoin</Text>
+        <Image
+          source={image ? {uri: image} : ICONS.coin}
+          style={[style.icon24, image ? style.coinImage : style.coinIcon]}
+        />
+        <Text style={[style.coinName]}>{name}</Text>
       </View>
 
       <View style={[style.cCoinPrice]}>
-        <Text style={[style.coinPrice]}>$ 36,000.35</Text>
-        <Text style={[style.coinPricePercent]}>2,30 %</Text>
+        <Text style={[style.coinPrice]}>$ {currency}</Text>
+
+        <View style={[style.cCoinPercent]}>
+          {}
+          <Image
+            source={ICONS.increase}
+            style={[
+              style.icon8,
+              style.coinPercentIcon,
+              percent.includes('-')
+                ? [style.flip180Deg, {tintColor: COLORS.decrease}]
+                : null,
+            ]}
+          />
+          <Text
+            style={[
+              style.coinPricePercent,
+              percent.includes('-') ? {color: COLORS.decrease} : null,
+            ]}>
+            {percent} %
+          </Text>
+        </View>
       </View>
     </View>
   );

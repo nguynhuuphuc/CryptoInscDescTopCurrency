@@ -6,31 +6,36 @@ import IconButton from '../../components/IconButton';
 import {LineChart} from 'react-native-wagmi-charts';
 import {COLORS, ICONS} from '../../utils/Const';
 import ItemCurrency from '../../components/ItemCurrency';
+import {useGetMarketCoinQuery} from '../../api/GeckoApi';
+import moment from 'moment';
+import {Coin} from '../../api/DataType';
 
-const data = [
-  {
-    timestamp: 1625945400000,
-    value: 33575.25,
-  },
-  {
-    timestamp: 1625946300000,
-    value: 33545.25,
-  },
-  {
-    timestamp: 1625947200000,
-    value: 33510.25,
-  },
-  {
-    timestamp: 1625948100000,
-    value: 33215.25,
-  },
-];
-const dataList = [1, 2, 3, 4, 5, 6, 7, 8];
-const renderItem = () => {
-  return <ItemCurrency />;
+const renderItem = (item: Coin) => {
+  const price = item.price_change_percentage_7d_in_currency
+    ? item.price_change_percentage_7d_in_currency.toFixed(2)
+    : '0';
+
+  return (
+    <ItemCurrency
+      currency={item.current_price}
+      name={item.name}
+      percent={price}
+      image={item.image}
+    />
+  );
 };
 
 export default function Home() {
+  const {data, error, isLoading} = useGetMarketCoinQuery();
+  const startDateUnix = moment().subtract(7, 'day').unix();
+  const dataChart = data
+    ? data[0].sparkline_in_7d.price.map((item, index) => {
+        return {
+          timestamp: startDateUnix + (index + 1) * 3600,
+          value: item,
+        };
+      })
+    : [{timestamp: 0, value: 0}];
   return (
     <SafeAreaView style={[style.cHome]}>
       <View style={[style.cWallet]}>
@@ -46,7 +51,7 @@ export default function Home() {
         </View>
       </View>
 
-      <LineChart.Provider data={data}>
+      <LineChart.Provider data={dataChart}>
         <LineChart height={200} style={[style.cLineChart]}>
           <LineChart.Path color={COLORS.lineChart} />
           <LineChart.CursorCrosshair color={COLORS.lineChart}>
@@ -62,8 +67,9 @@ export default function Home() {
       <View style={[style.cTopCurrency]}>
         <Text style={[style.topCurrencyTitle]}>Top Cryptocurrency</Text>
         <FlatList
-          data={dataList}
-          renderItem={renderItem}
+          contentContainerStyle={{marginBottom: 64}}
+          data={data}
+          renderItem={({item}) => renderItem(item)}
           style={[style.topCurrencyList]}
         />
       </View>
